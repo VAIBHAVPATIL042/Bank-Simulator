@@ -1,7 +1,6 @@
 package com.bank.dao;
 
 import com.bank.util.DBConfig;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,9 +26,9 @@ public class TransactionDAO {
     public void addTransaction(int accountId, double amount, String type, String mode, String receiver, String sender) {
         try (Connection conn = DBConfig.getConnection()) {
             addTransactionWithConnection(conn, accountId, amount, type, mode, receiver, sender);
-            System.out.println("✅ Transaction recorded.");
+            System.out.println("Transaction recorded");
         } catch (SQLException e) {
-            System.out.println("Error recording transaction:");
+            System.out.println("Error recording transaction");
             e.printStackTrace();
         }
     }
@@ -37,8 +36,8 @@ public class TransactionDAO {
     public void viewTransactions() {
         String sql = "SELECT transaction_id, account_id, transaction_amount, transaction_type, transaction_mode, transaction_time FROM bank_transaction ORDER BY transaction_time DESC";
         try (Connection conn = DBConfig.getConnection();
-             var ps = conn.prepareStatement(sql);
-             var rs = ps.executeQuery()) {
+             PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
 
             System.out.println("=== Transactions ===");
             while (rs.next()) {
@@ -50,8 +49,9 @@ public class TransactionDAO {
                         rs.getString("transaction_mode"),
                         rs.getTimestamp("transaction_time").toString());
             }
+
         } catch (SQLException e) {
-            System.out.println("Error reading transactions:");
+            System.out.println("Error reading transactions");
             e.printStackTrace();
         }
     }

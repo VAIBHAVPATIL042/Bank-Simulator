@@ -19,7 +19,7 @@ public class CreateTables {
                     customer_pin VARCHAR(10) NOT NULL,
                     aadhar_number VARCHAR(12) UNIQUE NOT NULL,
                     dob DATE,
-                    status VARCHAR(20) DEFAULT 'Inactive'
+                    status VARCHAR(20) DEFAULT 'Active'
                 )
             """);
 
@@ -61,3 +61,6 @@ public class CreateTables {
         }
     }
 }
+
+
+

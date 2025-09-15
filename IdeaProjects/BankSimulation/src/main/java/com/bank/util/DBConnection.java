@@ -14,7 +14,7 @@ public class DBConnection {
             // Load MySQL driver (optional in JDBC 4+, but safe to include)
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("✅ JDBC Connection Successful!");
+            System.out.println("JDBC Connection Successful!");
             return conn;
         } catch (ClassNotFoundException e) {
             System.out.println("JDBC Driver not found.");

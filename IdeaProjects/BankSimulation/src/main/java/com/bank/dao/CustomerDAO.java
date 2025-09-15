@@ -1,7 +1,6 @@
 package com.bank.dao;
 
 import com.bank.util.DBConfig;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,10 +19,10 @@ public class CustomerDAO {
             ps.setString(4, pin);
             ps.setString(5, aadhar);
             int rows = ps.executeUpdate();
-            System.out.println(rows > 0 ? "✅ Customer added!" : "❌ Customer add failed");
+            System.out.println(rows > 0 ? "Customer added" : "Customer add failed");
 
         } catch (SQLException e) {
-            System.out.println("Error inserting customer:");
+            System.out.println("Error inserting customer");
             e.printStackTrace();
         }
     }
@@ -31,7 +30,7 @@ public class CustomerDAO {
     public void viewCustomers() {
         String sql = "SELECT customer_id, name, phone_number, email, status FROM customer";
         try (Connection conn = DBConfig.getConnection();
-             var ps = conn.prepareStatement(sql);
+             PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             System.out.println("=== Customers ===");
@@ -45,7 +44,7 @@ public class CustomerDAO {
             }
 
         } catch (SQLException e) {
-            System.out.println("Error reading customers:");
+            System.out.println("Error reading customers");
             e.printStackTrace();
         }
     }
@@ -61,10 +60,10 @@ public class CustomerDAO {
             ps.setString(4, status);
             ps.setInt(5, customerId);
             int rows = ps.executeUpdate();
-            System.out.println(rows > 0 ? "✅ Customer updated!" : "❌ No such customer");
+            System.out.println(rows > 0 ? "Customer updated" : "No such customer");
 
         } catch (SQLException e) {
-            System.out.println("Error updating customer:");
+            System.out.println("Error updating customer");
             e.printStackTrace();
         }
     }
@@ -76,10 +75,10 @@ public class CustomerDAO {
 
             ps.setInt(1, customerId);
             int rows = ps.executeUpdate();
-            System.out.println(rows > 0 ? "✅ Customer deleted!" : "❌ No such customer");
+            System.out.println(rows > 0 ? "Customer deleted" : "No such customer");
 
         } catch (SQLException e) {
-            System.out.println("Error deleting customer:");
+            System.out.println("Error deleting customer");
             e.printStackTrace();
         }
     }

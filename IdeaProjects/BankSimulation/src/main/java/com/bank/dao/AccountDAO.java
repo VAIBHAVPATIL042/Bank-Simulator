@@ -23,7 +23,7 @@ public class AccountDAO {
             ps.setString(3, name);
             ps.setString(4, accNo);
             int rows = ps.executeUpdate();
-            System.out.println(rows > 0 ? "✅ Account created: " + accNo : "❌ Account creation failed");
+            System.out.println(rows > 0 ? "Account created: " + accNo : "Account creation failed");
         } catch (SQLException e) {
             System.out.println("Error creating account:");
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class AccountDAO {
 
             ps.setInt(1, accountId);
             int rows = ps.executeUpdate();
-            System.out.println(rows > 0 ? "✅ Account deleted!" : "❌ No such account");
+            System.out.println(rows > 0 ? "Account deleted!" : "No such account");
         } catch (SQLException e) {
             System.out.println("Error deleting account:");
             e.printStackTrace();
@@ -91,7 +91,7 @@ public class AccountDAO {
             int rows = ps.executeUpdate();
             if (rows == 0) {
                 conn.rollback();
-                System.out.println("❌ Deposit failed: account not found");
+                System.out.println("Deposit failed: account not found");
                 return;
             }
 
@@ -100,7 +100,7 @@ public class AccountDAO {
                 transactionDAO.addTransactionWithConnection(conn, accId, amount, "credited", mode, receiverInfo, senderInfo);
             }
             conn.commit();
-            System.out.println("✅ Deposit successful");
+            System.out.println("Deposit successful");
 
         } catch (SQLException e) {
             System.out.println("Error during deposit:");
@@ -121,7 +121,7 @@ public class AccountDAO {
             int rows = ps.executeUpdate();
             if (rows == 0) {
                 conn.rollback();
-                System.out.println("❌ Withdraw failed: insufficient balance or account not found");
+                System.out.println("Withdraw failed: insufficient balance or account not found");
                 return;
             }
 
@@ -130,7 +130,7 @@ public class AccountDAO {
                 transactionDAO.addTransactionWithConnection(conn, accId, amount, "debited", mode, receiverInfo, senderInfo);
             }
             conn.commit();
-            System.out.println("✅ Withdraw successful");
+            System.out.println("Withdraw successful");
 
         } catch (SQLException e) {
             System.out.println("Error during withdraw:");
@@ -152,7 +152,7 @@ public class AccountDAO {
                 int w = ps1.executeUpdate();
                 if (w == 0) {
                     conn.rollback();
-                    System.out.println("❌ Transfer failed: insufficient funds or sender not found");
+                    System.out.println("Transfer failed: insufficient funds or sender not found");
                     return;
                 }
             }
@@ -165,7 +165,7 @@ public class AccountDAO {
                 int d = ps2.executeUpdate();
                 if (d == 0) {
                     conn.rollback();
-                    System.out.println("❌ Transfer failed: receiver not found");
+                    System.out.println("Transfer failed: receiver not found");
                     return;
                 }
             }
@@ -179,7 +179,7 @@ public class AccountDAO {
             if (receiverId != null) transactionDAO.addTransactionWithConnection(conn, receiverId, amount, "credited", mode, receiverAccNo, senderAccNo);
 
             conn.commit();
-            System.out.println("✅ Transfer successful");
+            System.out.println("Transfer successful");
 
         } catch (SQLException e) {
             System.out.println("Error during transfer:");
