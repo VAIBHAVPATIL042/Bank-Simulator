@@ -1,0 +1,273 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.bank</groupId>
+    <artifactId>BankSimulation</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <jersey.version>3.1.5</jersey.version>
+    </properties>
+
+    <dependencies>
+        <!-- Jersey Core -->
+        <dependency>
+            <groupId>org.glassfish.jersey.core</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>3.1.5</version> <!-- Or latest stable -->
+        </dependency>
+
+        <!-- Jersey Servlet -->
+        <dependency>
+            <groupId>org.glassfish.jersey.containers</groupId>
+            <artifactId>jersey-container-servlet</artifactId>
+            <version>3.1.5</version>
+        </dependency>
+
+        <!-- Jersey HK2 Injection -->
+        <dependency>
+            <groupId>org.glassfish.jersey.inject</groupId>
+            <artifactId>jersey-hk2</artifactId>
+            <version>3.1.5</version>
+        </dependency>
+
+        <!-- JSON support (optional but useful) -->
+        <dependency>
+            <groupId>org.glassfish.jersey.media</groupId>
+            <artifactId>jersey-media-json-binding</artifactId>
+            <version>3.1.5</version>
+        </dependency>
+
+
+
+
+<!--        &lt;!&ndash; Jersey Core (Jakarta RESTful Web Services API) &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.core</groupId>-->
+<!--            <artifactId>jersey-server</artifactId>-->
+<!--            <version>3.1.3</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; Jersey Container for Servlet &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.containers</groupId>-->
+<!--            <artifactId>jersey-container-servlet</artifactId>-->
+<!--            <version>3.1.3</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; Jersey JSON support &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.media</groupId>-->
+<!--            <artifactId>jersey-media-json-binding</artifactId>-->
+<!--            <version>3.1.3</version>-->
+<!--        </dependency>-->
+
+
+        <!-- Jakarta WS-RS API -->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.ws.rs</groupId>-->
+<!--            <artifactId>jakarta.ws.rs-api</artifactId>-->
+<!--            <version>3.1.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
+
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.containers</groupId>-->
+<!--            <artifactId>jersey-container-servlet</artifactId>-->
+<!--            <version>3.1.5</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.inject</groupId>-->
+<!--            <artifactId>jersey-hk2</artifactId>-->
+<!--            <version>3.1.5</version>-->
+<!--        </dependency>-->
+
+        <!-- Jersey servlet container -->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.containers</groupId>-->
+<!--            <artifactId>jersey-container-servlet</artifactId>-->
+<!--            <version>${jersey.version}</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; Jersey JSON (optional) &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.media</groupId>-->
+<!--            <artifactId>jersey-media-json-binding</artifactId>-->
+<!--            <version>${jersey.version}</version>-->
+<!--        </dependency>-->
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- WAR plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<project xmlns="http://maven.apache.org/POM/4.0.0"-->
+<!--         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+<!--         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">-->
+<!--    <modelVersion>4.0.0</modelVersion>-->
+
+<!--    <groupId>org.example</groupId>-->
+<!--    <artifactId>BankSimulation</artifactId>-->
+<!--    <version>1.0-SNAPSHOT</version>-->
+<!--    <packaging>war</packaging>-->
+
+<!--    <properties>-->
+<!--        <maven.compiler.source>21</maven.compiler.source>-->
+<!--        <maven.compiler.target>21</maven.compiler.target>-->
+<!--        <jersey.version>3.1.5</jersey.version> &lt;!&ndash; Jersey 3.x supports Jakarta &ndash;&gt;-->
+<!--    </properties>-->
+
+<!--    <dependencies>-->
+<!--        &lt;!&ndash; Jakarta JAX-RS API (Tomcat 10 requires jakarta.* not javax.*) &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>jakarta.ws.rs</groupId>-->
+<!--            <artifactId>jakarta.ws.rs-api</artifactId>-->
+<!--            <version>3.1.0</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; Jersey servlet integration &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.containers</groupId>-->
+<!--            <artifactId>jersey-container-servlet</artifactId>-->
+<!--            <version>${jersey.version}</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; JSON (Jackson) &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.media</groupId>-->
+<!--            <artifactId>jersey-media-json-jackson</artifactId>-->
+<!--            <version>${jersey.version}</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; JDBC driver (example: MySQL) &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>8.0.33</version>-->
+<!--        </dependency>-->
+
+<!--        &lt;!&ndash; Connection pool (optional) &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.zaxxer</groupId>-->
+<!--            <artifactId>HikariCP</artifactId>-->
+<!--            <version>5.1.0</version>-->
+<!--        </dependency>-->
+<!--    </dependencies>-->
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            &lt;!&ndash; WAR plugin &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-war-plugin</artifactId>-->
+<!--                <version>3.4.0</version>-->
+<!--                <configuration>-->
+<!--                    <failOnMissingWebXml>false</failOnMissingWebXml>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
+<!--    </build>-->
+<!--</project>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!--    <dependencies>-->
+<!--        <dependency>-->
+<!--            <groupId>mysql</groupId>-->
+<!--            <artifactId>mysql-connector-java</artifactId>-->
+<!--            <version>8.0.33</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.containers</groupId>-->
+<!--            <artifactId>jersey-container-servlet</artifactId>-->
+<!--            <version>3.1.3</version>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>org.glassfish.jersey.media</groupId>-->
+<!--            <artifactId>jersey-media-json-jackson</artifactId>-->
+<!--            <version>3.1.3</version>-->
+<!--        </dependency>-->
+
+<!--    </dependencies>-->
+
+<!--    <build>-->
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>exec-maven-plugin</artifactId>-->
+<!--                <version>3.5.0</version>-->
+<!--                <configuration>-->
+<!--                    <mainClass>com.bank.TestConnection</mainClass>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
+<!--&lt;!&ndash;            <plugin>&ndash;&gt;-->
+<!--&lt;!&ndash;                <groupId>org.eclipse.jetty</groupId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <artifactId>jetty-maven-plugin</artifactId>&ndash;&gt;-->
+<!--&lt;!&ndash;                <version>11.0.15</version>&ndash;&gt;-->
+<!--&lt;!&ndash;            </plugin>&ndash;&gt;-->
+
+<!--        </plugins>-->
+<!--    </build>-->
+
+<!--    <properties>-->
+<!--        <maven.compiler.source>21</maven.compiler.source>-->
+<!--        <maven.compiler.target>21</maven.compiler.target>-->
+<!--        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>-->
+<!--    </properties>-->
+
+
+
+
+
+<!--</project>-->
