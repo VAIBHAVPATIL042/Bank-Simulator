@@ -24,20 +24,23 @@ public class CreateTables {
             """);
 
             stmt.executeUpdate("""
-                CREATE TABLE IF NOT EXISTS account (
-                    account_id INT AUTO_INCREMENT PRIMARY KEY,
-                    customer_id INT,
-                    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-                    balance DECIMAL(10,2) DEFAULT 50.00,
-                    account_type VARCHAR(50),
-                    account_name VARCHAR(100),
-                    account_number VARCHAR(20) UNIQUE NOT NULL,
-                    phone_number_linked VARCHAR(15),
-                    status VARCHAR(20) DEFAULT 'Active',
-                    FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
-                )
-            """);
+    CREATE TABLE IF NOT EXISTS account (
+        account_id INT AUTO_INCREMENT PRIMARY KEY,
+        customer_id INT NOT NULL,
+        account_number VARCHAR(20) UNIQUE NOT NULL,
+        ifsc_code VARCHAR(20) NOT NULL,
+        phone_number VARCHAR(15) NOT NULL,
+        aadhar_number VARCHAR(20) NOT NULL,
+        amount DECIMAL(10,2) DEFAULT 600.00,
+        bank_name VARCHAR(100) NOT NULL,
+        name_on_account VARCHAR(100) NOT NULL,
+        status VARCHAR(20) DEFAULT 'ACTIVE',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        modified_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        FOREIGN KEY (customer_id) REFERENCES customer(customer_id)
+    )
+""");
+
 
             stmt.executeUpdate("""
                 CREATE TABLE IF NOT EXISTS bank_transaction (

@@ -37,6 +37,21 @@
             <version>3.1.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+
         <!-- JSON support (optional but useful) -->
         <dependency>
             <groupId>org.glassfish.jersey.media</groupId>
@@ -44,10 +59,17 @@
             <version>3.1.5</version>
         </dependency>
 
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
 
 
 
-<!--        &lt;!&ndash; Jersey Core (Jakarta RESTful Web Services API) &ndash;&gt;-->
+
+
+        <!--        &lt;!&ndash; Jersey Core (Jakarta RESTful Web Services API) &ndash;&gt;-->
 <!--        <dependency>-->
 <!--            <groupId>org.glassfish.jersey.core</groupId>-->
 <!--            <artifactId>jersey-server</artifactId>-->
@@ -112,9 +134,12 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.4.0</version>
-                <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
+<!--                <configuration>-->
+<!--                    <failOnMissingWebXml>false</failOnMissingWebXml>-->
+<!--                    <url>http://localhost:8080/manager/text</url>-->
+<!--                    <server>TomcatServer</server>-->
+<!--                    <path>/BankSimulation</path>-->
+<!--                </configuration>-->
             </plugin>
         </plugins>
     </build>

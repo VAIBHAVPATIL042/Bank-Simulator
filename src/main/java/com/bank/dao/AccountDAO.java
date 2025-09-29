@@ -12,13 +12,13 @@ public class AccountDAO {
     private final TransactionDAO transactionDAO = new TransactionDAO();
 
     // create account (auto-generate account number if null)
-    public void createAccount(int customerId, String type, String name, String accountNumber) {
+    public void createAccount(long customerId, String type, String name, String accountNumber) {
         String accNo = (accountNumber == null || accountNumber.isBlank()) ? "AC" + System.currentTimeMillis() : accountNumber;
         String sql = "INSERT INTO account (customer_id, account_type, account_name, account_number) VALUES (?, ?, ?, ?)";
         try (Connection conn = DBConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, customerId);
+            ps.setLong(1, customerId);
             ps.setString(2, type);
             ps.setString(3, name);
             ps.setString(4, accNo);
@@ -40,7 +40,7 @@ public class AccountDAO {
             while (rs.next()) {
                 System.out.printf("%d | cust:%d | %s | %s | %s | %.2f | %s%n",
                         rs.getInt("account_id"),
-                        rs.getInt("customer_id"),
+                        rs.getLong("customer_id"),
                         rs.getString("account_number"),
                         rs.getString("account_name"),
                         rs.getString("account_type"),

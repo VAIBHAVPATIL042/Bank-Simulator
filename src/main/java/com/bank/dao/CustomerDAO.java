@@ -1,85 +1,118 @@
 package com.bank.dao;
 
+import com.bank.model.Customer;
 import com.bank.util.DBConfig;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDAO {
 
-    public void insertCustomer(String name, String phone, String email, String pin, String aadhar) {
-        String sql = "INSERT INTO customer (name, phone_number, email, customer_pin, aadhar_number) VALUES (?, ?, ?, ?, ?)";
+    public void createCustomer(Customer customer) throws SQLException {
+        String sql = "INSERT INTO customer (name, phone_number, email, address, customer_pin, aadhar_number, dob, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConfig.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-            ps.setString(1, name);
-            ps.setString(2, phone);
-            ps.setString(3, email);
-            ps.setString(4, pin);
-            ps.setString(5, aadhar);
-            int rows = ps.executeUpdate();
-            System.out.println(rows > 0 ? "Customer added" : "Customer add failed");
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getPhoneNumber());
+            ps.setString(3, customer.getEmail());
+            ps.setString(4, customer.getAddress());
+            ps.setString(5, customer.getCustomerPin());
+            ps.setString(6, customer.getAadharNumber());
 
-        } catch (SQLException e) {
-            System.out.println("Error inserting customer");
-            e.printStackTrace();
-        }
-    }
-
-    public void viewCustomers() {
-        String sql = "SELECT customer_id, name, phone_number, email, status FROM customer";
-        try (Connection conn = DBConfig.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
-
-            System.out.println("=== Customers ===");
-            while (rs.next()) {
-                System.out.printf("%d | %s | %s | %s | %s%n",
-                        rs.getInt("customer_id"),
-                        rs.getString("name"),
-                        rs.getString("phone_number"),
-                        rs.getString("email"),
-                        rs.getString("status"));
+            if (customer.getDob() != null) {
+                ps.setDate(7, Date.valueOf(customer.getDob()));
+            } else {
+                ps.setNull(7, Types.DATE);
             }
 
-        } catch (SQLException e) {
-            System.out.println("Error reading customers");
-            e.printStackTrace();
+            ps.setString(8, customer.getStatus() != null ? customer.getStatus() : "Active");
+
+            ps.executeUpdate();
+
+            try (ResultSet keys = ps.getGeneratedKeys()) {
+                if (keys.next()) {
+                    customer.setCustomerId(keys.getInt(1));
+                }
+            }
         }
     }
 
-    public void updateCustomer(int customerId, String name, String phone, String email, String status) {
-        String sql = "UPDATE customer SET name = ?, phone_number = ?, email = ?, status = ? WHERE customer_id = ?";
+    public Customer getCustomerById(int customerId) throws SQLException {
+        String sql = "SELECT * FROM customer WHERE customer_id = ?";
         try (Connection conn = DBConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, name);
-            ps.setString(2, phone);
-            ps.setString(3, email);
-            ps.setString(4, status);
-            ps.setInt(5, customerId);
-            int rows = ps.executeUpdate();
-            System.out.println(rows > 0 ? "Customer updated" : "No such customer");
-
-        } catch (SQLException e) {
-            System.out.println("Error updating customer");
-            e.printStackTrace();
+            ps.setLong(1, customerId);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return mapRowToCustomer(rs);
+                } else {
+                    return null;
+                }
+            }
         }
     }
 
-    public void deleteCustomer(int customerId) {
-        String sql = "DELETE FROM customer WHERE customer_id = ?";
+    public List<Customer> getAllCustomers() throws SQLException {
+        List<Customer> customers = new ArrayList<>();
+        String sql = "SELECT * FROM customer";
+        try (Connection conn = DBConfig.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+
+            while (rs.next()) {
+                customers.add(mapRowToCustomer(rs));
+            }
+        }
+        return customers;
+    }
+
+    public void updateCustomer(Customer customer) throws SQLException {
+        String sql = "UPDATE customer SET name=?, phone_number=?, email=?, address=?, customer_pin=?, aadhar_number=?, dob=?, status=? WHERE customer_id=?";
         try (Connection conn = DBConfig.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, customerId);
-            int rows = ps.executeUpdate();
-            System.out.println(rows > 0 ? "Customer deleted" : "No such customer");
+            ps.setString(1, customer.getName());
+            ps.setString(2, customer.getPhoneNumber());
+            ps.setString(3, customer.getEmail());
+            ps.setString(4, customer.getAddress());
+            ps.setString(5, customer.getCustomerPin());
+            ps.setString(6, customer.getAadharNumber());
 
-        } catch (SQLException e) {
-            System.out.println("Error deleting customer");
-            e.printStackTrace();
+            if (customer.getDob() != null) {
+                ps.setDate(7, Date.valueOf(customer.getDob()));
+            } else {
+                ps.setNull(7, Types.DATE);
+            }
+
+            ps.setString(8, customer.getStatus() != null ? customer.getStatus() : "Active");
+            ps.setInt(9, customer.getCustomerId());
+
+            ps.executeUpdate();
         }
+    }
+
+    // Helper to map ResultSet row to Customer object
+    private Customer mapRowToCustomer(ResultSet rs) throws SQLException {
+        Customer c = new Customer();
+        c.setCustomerId(rs.getInt("customer_id"));
+        c.setName(rs.getString("name"));
+        c.setPhoneNumber(rs.getString("phone_number"));
+        c.setEmail(rs.getString("email"));
+        c.setAddress(rs.getString("address"));
+        c.setCustomerPin(rs.getString("customer_pin"));
+        c.setAadharNumber(rs.getString("aadhar_number"));
+
+        Date dobDate = rs.getDate("dob");
+        if (dobDate != null) {
+            c.setDob(dobDate.toLocalDate().toString()); // Convert LocalDate to String
+        } else {
+            c.setDob(null);
+        }
+
+        c.setStatus(rs.getString("status"));
+        return c;
     }
 }
